@@ -1,2 +1,5 @@
-package org.timboland.testautomation.utilities;public class DateUtils {
+package org.timboland.testautomation.utilities;
+
+public class DateUtils {
+
 }

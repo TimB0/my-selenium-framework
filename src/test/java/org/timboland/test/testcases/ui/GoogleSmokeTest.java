@@ -1,6 +1,6 @@
-package org.timboland.test.testcases;
+package org.timboland.test.testcases.ui;
 
 import org.timboland.automation.execution.BaseTest;
 
-public class SmokeTest extends BaseTest {
+public class GoogleSmokeTest extends BaseTest {
 }
