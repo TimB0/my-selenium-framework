@@ -1,17 +1,20 @@
 package org.timboland.testautomation.utilities;
 
+import io.restassured.response.Response;
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.core.webdriver.RemoteDriver;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.timboland.automation.data.CommonData;
+import org.timboland.automation.exceptions.BaseException;
 
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DriverUtils {
+
 
     private static final Logger logger = LoggerFactory.getLogger(DriverUtils.class);
 
@@ -36,6 +39,7 @@ public class DriverUtils {
      * @return sessionID
      */
     public static String getCurrentSessionID() {
+
         return RemoteDriver.of(Serenity.getDriver()).getSessionId().toString();
     }
 
@@ -47,8 +51,39 @@ public class DriverUtils {
         return RemoteDriver.of(Serenity.getDriver()).getCapabilities().getPlatformName().toString();
     }
 
+    /**
+     * get list of Capabilities
+     * @return Map of capabilities
+     */
+    public static Map<String, Object> getCapabilities() {
+        return RemoteDriver.of(Serenity.getDriver()).getCapabilities().asMap();
+    }
+
+    /**
+     * get expected browser version, if provided
+     * @return browser version
+     */
+    public static String getExpectedBrowserVersion() {
+        return SerenityPropertyHelper.getProperty("webdriver_remote_browser_version");
+    }
+
+    /**
+     * triggers graphql query to grid node current session
+     * reads map of node details
+     * returns nodeURI
+     * @return nodeId
+     */
+
     public static String getNodeId(String webdriverURL) {
-        Response
+
+        Response rsp = null;
+        try {
+            rsp = GridUtils.getGridCurrentNodeSessionDetails(webdriverURL);
+        } catch (BaseException e) {
+            e.printStackTrace();
+        }
+        String nodeURI = GridUtils.readGridCurrentNodeDetails(rsp).get("nodeUri");
+        return nodeURI;
     }
 
     /**
@@ -96,16 +131,14 @@ public class DriverUtils {
         driverInformation.put("browserName", browserName);
         driverInformation.put("platform", DriverUtils.getPlatform());
         driverInformation.put("sessionID", DriverUtils.getCurrentSessionID());
-        driverInformation.put("nodeID", DriverUtils.getNodeId();
+        driverInformation.put("nodeID", DriverUtils.getNodeId());
         return driverInformation;
     }
-
-
-
 
     public static void printDriverDetails() {
         logger.info("***** PRINTING DRIVER CONNECTION DETAILS");
         try {
+
             for (Map.Entry mapEntry : returnDriverDetails().entrySet()) {
                 logger.info(mapEntry.getKey() + " : " + mapEntry.getValue());
             }

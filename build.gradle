@@ -12,7 +12,8 @@ repositories {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    api (group: 'net.serenity-bdd',     name: 'serenity-core',      version: "$serenityBddVersion")
+    api (group: 'net.serenity-bdd',     name: 'serenity-core',          version: "$serenityBddVersion")
+    api (group: 'net.serenity-bdd',     name: 'serenity-rest-assured',  version: "$serenityBddVersion")
 
 }
 

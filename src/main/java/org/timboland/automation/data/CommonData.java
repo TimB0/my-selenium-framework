@@ -18,12 +18,6 @@ public class CommonData {
         } else {
             return SerenityPropertyHelper.getProperty(ENVIRONMENT).toLowerCase();
         }
-
-
-    }
-
-    }
-
-    }
     }
 }
+

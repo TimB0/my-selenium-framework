@@ -7,7 +7,7 @@ public class WebUtils {
 
     /**
      * read port from current URL
-     * @param "Port Number"
+     * @param 'Port Number'
      * @return MalformedURLException
      */
     public static int getPortNum(String url) throws MalformedURLException {
